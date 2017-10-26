@@ -1,0 +1,1 @@
+export {patientApp} from './patient';

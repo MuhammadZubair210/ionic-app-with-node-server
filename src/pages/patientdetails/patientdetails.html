@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar color="danger">
+    <ion-title>Single Patient</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-card>
+      <ion-item>
+        <strong>Patient Name:</strong> {{items.name}}
+      </ion-item>
+      <ion-item>
+        <strong>Disease:</strong> {{items.disease}}
+      </ion-item>
+      <ion-item>
+        <strong>Age:</strong> {{items.age}}
+      </ion-item>
+      <ion-item>
+        <strong>Email:</strong> {{items.email}}
+      </ion-item>
+      <ion-item>
+        <strong>Contact</strong> {{items.phoneNo}}
+      </ion-item>
+      <ion-item>
+        <strong>Medication:</strong> {{items.medication}}
+      </ion-item>
+      <ion-item>
+        <strong>Cost:</strong> {{items.cost}}
+      </ion-item>
+      <ion-item>
+        <strong>Date</strong> {{items.date}}
+      </ion-item>
+      <button ion-button color="danger" style="width:48%;" (click)="delete(items._id)">DELETE</button>
+      <button ion-button color="primary" style="width:48%;" (click)="itemTapped(items)">EDIT</button>
+    </ion-card>
+  </ion-list>
+</ion-content>

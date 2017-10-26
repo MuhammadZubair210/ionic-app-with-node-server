@@ -1,19 +1,18 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, IonicPage } from 'ionic-angular';
 import { NgRedux, select } from 'ng2-redux';
 import { AppState } from '../../reducers/rootReducer';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ADD_PATIENT_SUCCESS, VIEW_DETAILS } from '../../action/patient';
 import { Observable } from "rxjs/Observable";
 import { ListPage } from "../list/list";
-import { StatingPage } from "../stating/stating";
 
-
+@IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+  selector: 'page-stating',
+  templateUrl: 'stating.html',
 })
-export class HomePage {
+export class StatingPage {
 
   patientForm: FormGroup;
   @select((s: AppState) => s.patient.patientData) view: Observable<Array<any>>
@@ -47,4 +46,5 @@ export class HomePage {
     })
 
   }
+
 }

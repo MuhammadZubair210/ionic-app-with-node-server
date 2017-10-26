@@ -1,37 +1,61 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AppState } from "../../reducers/rootReducer";
+import { Observable } from "rxjs/Observable";
+import { select, NgRedux } from "ng2-redux";
+import { VIEW_DETAILS } from "../../action/patient";
+import { PatientdetailsPage } from "../patientdetails/patientdetails";
 
 @Component({
   selector: 'page-list',
   templateUrl: 'list.html'
 })
 export class ListPage {
+
   selectedItem: any;
-  icons: string[];
-  items: Array<{title: string, note: string, icon: string}>;
+  items = [];
+  it = [];
+  @select((s: AppState) => s.patient.viewData) view: Observable<Array<any>>
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-    // If we navigated to this page, we will have an item available as a nav param
+  constructor(private ngRedux: NgRedux<AppState>, public navCtrl: NavController, public navParams: NavParams) {
+
+    // this.view.subscribe((datas) => {
+    //   this.items = datas;
+    // })
+    console.log(this.view)
+    this.initializeitems();
+
     this.selectedItem = navParams.get('item');
+  }
+  itt: any;
+  initializeitems() {
+    this.view.subscribe((datas) => {
+      this.itt = datas
+      this.items = this.itt.data;
+      console.log(this.itt.data)
+    })
+  }
 
-    // Let's populate this page with some filler content for funzies
-    this.icons = ['flask', 'wifi', 'beer', 'football', 'basketball', 'paper-plane',
-    'american-football', 'boat', 'bluetooth', 'build'];
+  itemTapped(item) {
+    this.navCtrl.push(PatientdetailsPage, {
+      items: item
+    });
+  }
 
-    this.items = [];
-    for (let i = 1; i < 11; i++) {
-      this.items.push({
-        title: 'Item ' + i,
-        note: 'This is item #' + i,
-        icon: this.icons[Math.floor(Math.random() * this.icons.length)]
-      });
+  dataa = [];
+
+  getItems(ev) {
+    // Reset items back to all of the items
+    this.initializeitems();
+
+    // set val to the value of the ev target
+    var val = ev.target.value;
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        console.log(item)
+        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1 || item.date.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
     }
   }
 
-  itemTapped(event, item) {
-    // That's right, we're pushing to ourselves!
-    this.navCtrl.push(ListPage, {
-      item: item
-    });
-  }
 }
